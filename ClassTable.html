@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700&display=swap" rel="stylesheet">
+    <title>ClassTable</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Montserrat;
+        }
+        table {
+            text-align: left;
+            border-collapse: separate;
+            border-spacing: 5px;
+            font-size: 14px;
+            margin: auto;
+            width: 60%;
+            height: auto;
+            margin-top: 30px;
+            box-shadow: 0 6px 21px rgba(0,0,0,.15);
+        }
+        th {
+            font-size: 18px;
+            padding: 10px;
+            background: #32405b;
+            color: lightgrey;
+            font-weight: 700;
+        }
+        td {
+            background: lightgrey;
+            padding: 10px;
+            height: 30px;
+            color:#32405b;
+        }
+        .tr, #checkbox{
+            cursor: pointer;
+        }
+        #checkbox {
+            margin: 20% 0 0 45%;
+        }
+    </style>
+</head>
+<body>
+    <table id="table">
+        <tr class="mainTR">
+            <th>Id</th>
+            <th>Brand-name</th>
+            <th>Part number</th>
+            <th>Description</th>
+            <th>qty</th>
+            <th>Warehouse</th>
+            <th>Price</th>
+            <th>full part number</th>
+            <th>CheckBox</th>
+        </tr>
+</table>
+    <script type="text/javascript" src="./script.js"></script>
+
+<script type="text/javascript">
+    var arr=[];
+    const tab = document.getElementById('table');
+    var header = ['id', 'brand_name','part_number','description_english','qty','warehouse','price','full_part_number'];
+    fetch('https://back.cruiseraddiction.com/api/parts')
+        .then(response => response.json())
+        .then(items=> {
+            new Table({
+                items,
+                header,
+                tab,
+                rowClick: (item) => console.log("Выбранный объект: ", item),
+                selected: (check) => {
+                    arr.push(check);
+                        console.log("Все выбранные объекты: ", arr)
+                },
+                displayName : (name) =>{
+                    // for(var key in name){
+                        console.log(name)
+                    // }
+                } ,
+                displayValue: (value) => console.log(value),
+            })
+        })
+        .catch(err => console.log(err))
+
+</script>
+</body>
+</html>
